@@ -1,7 +1,7 @@
 
 input = {}
 def readinput():
-   file = open("C:\DevOpps\Playground\AdventOfCode\Day1\input.txt", "r")
+   file = open(r"C:\DevOpps\Playground\AdventOfCode\Day1\input.txt", "r")
    for line in file:
       input[int(line)] = int(line)
 
@@ -9,9 +9,7 @@ def main():
    readinput()
    first_star()
    second_star()        
-      
-      #print(inp)
-       
+          
 def first_star():
     for num in input:
       search = 2020 - int(num)
