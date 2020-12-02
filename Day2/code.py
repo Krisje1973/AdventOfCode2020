@@ -8,6 +8,16 @@ class Policy:
     high=0
     char=""
     count=0
+    def check_low(self):
+        chars =  [char for char in self.password]         
+        if chars[self.low] == self.char:
+            return 1
+        return 0
+    def check_high(self):
+        chars =  [char for char in self.password]         
+        if chars[self.high] == self.char:
+            return 1
+        return 0
     
 def readinput():
     file = open(r"C:\DevOpps\Playground\AdventOfCode\Day2\input.txt", "r")
@@ -44,14 +54,8 @@ def first_star():
 def second_star():
     counter=0
     valid=0
-    for policy in policies:      
-        chars =  [char for char in policy.password]  
-        match = 0
-        if chars[policy.low] == policy.char:
-            match+=1           
-        if chars[policy.high] == policy.char:
-            match+=1         
-        if match==1:
+    for policy in policies:
+        if policy.check_low()+policy.check_high() == 1:
             valid+=1
            
         counter+=1
