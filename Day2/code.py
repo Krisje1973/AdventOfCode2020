@@ -1,22 +1,28 @@
 
 policies = []
-password = []
-least = []
-most = []
-char = []
-count = []
+
+class Policy:
+    policy=""
+    password=""
+    low=0
+    high=0
+    char=""
+    count=0
+    
 def readinput():
-   file = open(r"C:\DevOpps\Playground\AdventOfCode\Day2\input.txt", "r")
-   for line in file:
-      splitted = line.split(":")
-      _policy = splitted[0]
-      policies.append(_policy)
-      password.append(splitted[1])
-      _policy_split = _policy.split("-")
-      least.append(int(_policy_split[0]))
-      most.append(int(_policy_split[1].split(" ")[0]))
-      char.append(_policy_split[1].split(" ")[1])
-      count.append(count_char(_policy_split[1].split(" ")[1],splitted[1]))
+    file = open(r"C:\DevOpps\Playground\AdventOfCode\Day2\input.txt", "r")
+    for line in file:
+        policy=Policy()
+        splitted = line.split(":")        
+        policy.policy= splitted[0]
+        policy.password=splitted[1]       
+        _policy_split = policy.policy.split("-")
+        policy.low=int(_policy_split[0])
+        policy.high=int(_policy_split[1].split(" ")[0])
+        policy.char=_policy_split[1].split(" ")[1]
+        policy.count=count_char(_policy_split[1].split(" ")[1],splitted[1])
+
+        policies.append(policy)
 
 def main():
    readinput()
@@ -27,7 +33,7 @@ def first_star():
     counter=0
     valid=0
     for policy in policies:
-       if count[counter] >= least[counter] and count[counter] <= most[counter]:
+       if policy.count >= policy.low and policy.count<= policy.high:
            valid+=1     
        counter+=1
 
@@ -39,11 +45,11 @@ def second_star():
     counter=0
     valid=0
     for policy in policies:      
-        chars =  [char for char in password[counter]]  
+        chars =  [char for char in policy.password]  
         match = 0
-        if chars[least[counter]] == char[counter]:
+        if chars[policy.low] == policy.char:
             match+=1           
-        if chars[most[counter]] == char[counter]:
+        if chars[policy.high] == policy.char:
             match+=1         
         if match==1:
             valid+=1
