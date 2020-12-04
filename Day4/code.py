@@ -1,11 +1,5 @@
 import re
 lines = []
-validPasswords = []
-class Passportfields:
-    key=""
-    value=""
-    
-
 def readinput():
     global lines
     file = open(r"C:\DevOpps\Playground\AdventOfCode\Day4\input.txt", "r")
@@ -13,7 +7,7 @@ def readinput():
 
 def main():
    readinput()
-   #first_star()
+   first_star()
    second_star()        
           
 def first_star():   
@@ -36,18 +30,18 @@ def first_star():
 
         if check: 
             valid+=1
-            validPasswords.append(line)
     print("Result First Star")
     print(str(valid))
 
 def second_star():  
     
-    file = open(r"C:\DevOpps\Playground\AdventOfCode\Day4\input.txt",) 
+    file = open(r"C:\DevOpps\Playground\AdventOfCode\Day4\input.txt") 
     lines = file.read()
     passports = []  
-    for block in lines.split('\n\n'):
-        parsed = re.findall(r'(\w+):(\S+)', block)
-        passports.append({m[0]: m[1] for m in parsed})
+    for line in lines.split('\n\n'):
+        passports.append({m[0]: m[1] for m in re.findall(r'(\w+):(\S+)', line)})
+
+    print("Result Second Star")
     print(sum(map(is_valid, passports)))
    
 def is_valid(passport):
