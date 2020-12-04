@@ -15,7 +15,7 @@ def main():
           
 def first_star():   
     print("Result First Star")
-    print(print(sum(map(is_valid_A, passports))))
+    print(sum(map(is_valid_A, passports)))
 
 def second_star(): 
     print("Result Second Star")
