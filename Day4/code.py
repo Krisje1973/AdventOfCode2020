@@ -6,7 +6,7 @@ def readinput():
     file = open(r"C:\DevOpps\Playground\AdventOfCode\Day4\input.txt") 
     lines = file.read()
     for line in lines.split('\n\n'):
-        passports.append({m[0]: m[1] for m in re.findall(r'(\w+):(\S+)', line)})        
+        passports.append({p[0]: p[1] for p in re.findall(r'(\w+):(\S+)', line)})        
       
 def main():
    readinput()
@@ -19,7 +19,7 @@ def first_star():
 
 def second_star(): 
     print("Result Second Star")
-    print(sum(map(is_valid, passports)))
+    print(sum(map(is_valid_B, passports)))
 
 def is_valid_A(passport):
     
@@ -33,7 +33,7 @@ def is_valid_A(passport):
     except:
         return len(passport)==7
 
-def is_valid(passport):
+def is_valid_B(passport):
     
     try:
         byr = int(passport['byr'])
