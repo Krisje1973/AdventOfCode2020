@@ -1,49 +1,38 @@
 import re
 lines = []
+passports = []  
 def readinput():
     global lines
-    file = open(r"C:\DevOpps\Playground\AdventOfCode\Day4\input.txt", "r")
-    lines = [line.strip() for line in file]
-
+    file = open(r"C:\DevOpps\Playground\AdventOfCode\Day4\input.txt") 
+    lines = file.read()
+    for line in lines.split('\n\n'):
+        passports.append({m[0]: m[1] for m in re.findall(r'(\w+):(\S+)', line)})        
+      
 def main():
    readinput()
    first_star()
    second_star()        
           
 def first_star():   
-    valid=0
-    passport=[]
-    
-    for line in lines:
-        check = False
-        keys= line.split()        
-        if keys==[]:           
-            if len(passport)==8:
-                check = True
-            elif len(passport)==7 and passport.count("cid")==0:
-                 check = True
-               
-            passport.clear()
-        else:
-            for key in keys:
-                passport.append(key.split(":")[0])    
-
-        if check: 
-            valid+=1
     print("Result First Star")
-    print(str(valid))
+    print(print(sum(map(is_valid_A, passports))))
 
-def second_star():  
-    
-    file = open(r"C:\DevOpps\Playground\AdventOfCode\Day4\input.txt") 
-    lines = file.read()
-    passports = []  
-    for line in lines.split('\n\n'):
-        passports.append({m[0]: m[1] for m in re.findall(r'(\w+):(\S+)', line)})
-
+def second_star(): 
     print("Result Second Star")
     print(sum(map(is_valid, passports)))
-   
+
+def is_valid_A(passport):
+    
+    try:
+        if len(passport)==8:
+            return True
+        elif len(passport)==7 and not passport["cid"]:
+            return True        
+              
+        return False
+    except:
+        return len(passport)==7
+
 def is_valid(passport):
     
     try:
