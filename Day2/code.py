@@ -40,28 +40,13 @@ def main():
    second_star()        
           
 def first_star():
-    counter=0
-    valid=0
-    for policy in policies:
-       if policy.count >= policy.low and policy.count<= policy.high:
-           valid+=1     
-       counter+=1
-
     print("Result First Star")
-    print(str(valid))
+    print(sum(map(lambda x:x.count >= x.low and x.count<= x.high,policies)))
 
 
-def second_star():
-    counter=0
-    valid=0
-    for policy in policies:
-        if policy.check_low()+policy.check_high() == 1:
-            valid+=1
-           
-        counter+=1
-        
+def second_star():  
     print("Result Second Star")
-    print(str(valid))
+    print(sum(map(lambda x:x.check_low()+x.check_high() == 1,policies)))
 
 def count_char(char,password):
     count=0
