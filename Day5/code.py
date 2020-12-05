@@ -2,9 +2,8 @@ import re
 import math
 
 seats=[]
-seatids={}
 class Seat:
-    lo,hi,row,col,seat_id=0,127,0,7,0
+    lo,hi,row,col,seat_id=0,127,0,0,0
     code = ""
     def calulate_seatid(self):
         self.get_row()
@@ -24,14 +23,15 @@ class Seat:
 
     def get_col(self):
         self.lo=0
-        self.hi = self.col
+        self.hi=7
         for di in self.code[7:]:
             mi = math.trunc((self.hi-self.lo)/2)
             if di == "L":
                 self.hi=self.lo+mi
             else:
-                self.lo=self.lo+mi
-        if self.code[7] == "L":
+                self.lo=self.lo+mi+1
+
+        if self.code[9] == "L":
             self.col = self.lo
         else:
             self.col = self.hi    
@@ -45,7 +45,6 @@ def readinput():
         seat.code=line
         seat.calulate_seatid()
         seats.append(seat)
-        seatids[seat.seat_id] = seat.seat_id
       
 def main():
    readinput()
@@ -54,21 +53,26 @@ def main():
           
 def first_star():   
     seatid=0
-    global seatids
     for seat in seats:
         if seat.seat_id>seatid:
-            seatid = seat.seat_id  
-        seatids[str(seat.seat_id)] = seat.seat_id      
+            seatid = seat.seat_id     
     
     print("Result First Star")
     print(str(seatid))
 
 def second_star():   
+    missing = 0
+    global seats    
+    seats = sorted(seats, key = lambda s: s.row*10+s.col)
+    
+    for seat in seats:
+        if seat.seat_id-missing==2:
+            missing+=1
+            break
+        missing=seat.seat_id
    
-           
-
     print("Result Second Star")
-   
+    print(missing)
 
 if __name__ == '__main__':
     main()
