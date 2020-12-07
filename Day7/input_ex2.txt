@@ -1,0 +1,7 @@
+shiny gold bags contain 2 dark red bags. 2 * 64 = 128                     2 * 1
+dark red bags contain 2 dark orange bags. 2 * 30 = 60 + 2 = 64            2 * 2 + 2 = 6
+dark orange bags contain 2 dark yellow bags. 2 * 14 = 28 + 2 = 30         6 * 2 + 2 = 14  
+dark yellow bags contain 2 dark green bags. 2 * 6 =  12 + 2 = 14          14 * 2
+dark green bags contain 2 dark blue bags. 2 * 2 = 4 + 2 = 6
+dark blue bags contain 2 dark violet bags.  2
+dark violet bags contain no other bags.

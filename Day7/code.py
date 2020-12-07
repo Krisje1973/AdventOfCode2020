@@ -17,7 +17,7 @@ input = []
 bags = {}
 def readinput():
     global input
-    input = readinput_lines("Day7\input.txt")
+    input = readinput_lines(r"Day7\input_ex2.txt")
     input = [bag for bag in input if not bag.split(" contain ")[1].startswith("no")]
 
 def find_bag(bagname):
@@ -40,6 +40,7 @@ def first_star():
     # recursive lookup
 
     #list with bags and there child bags
+    global bags
     for inp in input:       
         split = inp.split(",")
         bag = Bag() 
@@ -49,6 +50,7 @@ def first_star():
         for n in split[0].split("bags")[1].split("contain")[1].split()[1:3]:
             child.name += " " + n
         child.name = child.name.strip()
+        child.qty = int(split[0].split("bags")[1].split("contain")[1].split()[0])
         bag.bags[child.name] = child
         
         for sub in split[1:]:
@@ -56,14 +58,30 @@ def first_star():
             for n in sub.split("bag")[0].split()[1:]:
                 child.name += " " + n
             child.name = child.name.strip()
+            child.qty = int(sub.split()[0])
             bag.bags[child.name] = child
        
         bags[bag.name] = bag    
     
     print("Result First Star")
-    print(str(len(Counter(find_bag("shiny gold")))))
+    bags_found = Counter(find_bag("shiny gold"))
+    print(str(len(bags_found)))
+
+def calc_bags(sub_bags):
+    result = 0
+    result += len(sub_bags)
+    for bag in sub_bags:
+        result += len(sub_bags) + len(sub_bags) * sub_bags[bag].qty
+        if bag in bags:
+            result = sub_bags[bag].qty * calc_bags(bags[bag].bags) 
+
+    return result
 
 def second_star():
+
+    shiny = bags["shiny gold"].bags
+    print(str(calc_bags(shiny)))
+        
     print("Result Second Star")
           
 if __name__ == '__main__':
