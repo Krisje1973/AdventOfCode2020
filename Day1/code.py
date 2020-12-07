@@ -1,10 +1,12 @@
 
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from  AOCHelper import * 
 input = {}
 def readinput():
-   file = open(r"C:\DevOpps\Playground\AdventOfCode\Day1\input.txt", "r")
-   for line in file:
-      input[int(line)] = int(line)
-
+   global input
+   input = readinput_dict("Day1\input.txt")
+  
 def main():
    readinput()
    first_star()

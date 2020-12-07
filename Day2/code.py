@@ -1,6 +1,10 @@
 
-policies = []
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from AOCHelper import * 
 
+policies = []
+lines=[]
 class Policy:
     policy=""
     password=""
@@ -19,9 +23,10 @@ class Policy:
             return 1
         return 0
     
-def readinput():
-    file = open(r"C:\DevOpps\Playground\AdventOfCode\Day2\input.txt", "r")
-    for line in file:
+def readinput():   
+    global lines
+    lines = readinput_lines("Day2\input.txt")
+    for line in lines:
         policy=Policy()
         splitted = line.split(":")        
         policy.policy= splitted[0]
