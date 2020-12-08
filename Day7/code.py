@@ -17,7 +17,7 @@ input = []
 bags = {}
 def readinput():
     global input
-    input = readinput_lines(r"Day7\input_ex2.txt")
+    input = readinput_lines(r"Day7\input.txt")
     input = [bag for bag in input if not bag.split(" contain ")[1].startswith("no")]
 
 def find_bag(bagname):
@@ -71,16 +71,19 @@ def calc_bags(sub_bags):
     result = 0
     result += len(sub_bags)
     for bag in sub_bags:
-        result += len(sub_bags) + len(sub_bags) * sub_bags[bag].qty
         if bag in bags:
-            result = sub_bags[bag].qty * calc_bags(bags[bag].bags) 
-
+            result += sub_bags[bag].qty * calc_bags(bags[bag].bags)
+    
     return result
 
 def second_star():
 
+    result = 0 
     shiny = bags["shiny gold"].bags
-    print(str(calc_bags(shiny)))
+    for bag in shiny:
+        result += calc_bags(bags[bag].bags) * shiny[bag].qty + shiny[bag].qty
+    result += calc_bags(shiny) * 2
+    print(result)
         
     print("Result Second Star")
           
