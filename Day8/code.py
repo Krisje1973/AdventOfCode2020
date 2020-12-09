@@ -6,8 +6,8 @@ from AOCHelper import *
 prog=[]
 def readinput():
     global prog
-    input = readinput_lines(r"Day8\input.txt")
-    prog = [line.strip().split() for line in input if line.strip()]
+    input = readinput_lines(r"Day8\input_ex.txt")
+    list = [line.strip().split() for line in input if line.strip()]
     prog = [(op, int(x)) for op, x in prog]
 
 def main():
@@ -54,3 +54,4 @@ def second_star():
 
 if __name__ == '__main__':
     main()
+
