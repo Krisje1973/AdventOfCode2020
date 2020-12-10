@@ -1,4 +1,4 @@
-def readinput_dict(filename):    
+def readinput_dict_as_ints(filename):    
     input = {}
     file = open(filename, "r")
     for line in file:

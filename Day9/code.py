@@ -18,7 +18,7 @@ def check_data(data,checknum):
                     return checknum
 def main():
     readinput()
-    #first_star()
+    first_star()
     second_star()        
 
 def first_star():  
@@ -39,7 +39,6 @@ def first_star():
 
 def second_star():
     global first_star 
-    first_star = 144381670    
     second_star = 0
     data = []
     for i in range(len(input)):

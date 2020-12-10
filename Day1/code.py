@@ -5,7 +5,7 @@ from  AOCHelper import *
 input = {}
 def readinput():
    global input
-   input = readinput_dict("Day1\input.txt")
+   input = readinput_dict_as_ints("Day1\input.txt")
   
 def main():
    readinput()
