@@ -15,7 +15,19 @@ def readinput_lines_as_ints(filename):
     for line in [line.strip() for line in file]:
       input.append(int(line)) 
     return input
-  
+
+class Compass:
+  compasspoints = {'N': (0, 1), 'E': (1, 0), 'S': (0, -1), 'W': (-1, 0)} # Can be used for north/south, east/west calculation
+
+  def turnCompassPoint(self,compaspoints,degrees, currentdirection,turndirection):     
+    degrees = (degrees // 90)   
+    if turndirection == "L":
+        degrees=-degrees
+    dirs = list(self.compasspoints.keys())
+    idx = dirs.index(currentdirection) + degrees
+    idx %= len(dirs)
+    return (dirs[idx:] + dirs[:idx])[0]       
+    
 def get_suroundings(grid,x,y,count):
   start =-1
   end = count -1 + start

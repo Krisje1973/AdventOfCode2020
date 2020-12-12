@@ -15,18 +15,9 @@ class Position:
     ns_way,ew_way = 1,10
     direction="E"
   
-    def turn(self,dir,degrees):       
-        degrees = (degrees // 90)
-        cnt=0
-        if degrees==3:
-            cnt+=1
-        if dir == "L":
-            degrees=-degrees
-        dirs = list(self.dirs.keys())
-        idx = dirs.index(self.direction) + degrees
-        idx %= len(dirs)
-        direction = (dirs[idx:] + dirs[:idx])[0] 
-        self.direction = direction      
+    def turn(self,dir,degrees):  
+        comp = Compass()     
+        self.direction = comp.turnCompassPoint(self.dirs,degrees,self.direction,dir)
 
     def move(self,dir,degrees):
         
