@@ -15,8 +15,7 @@ class Position:
     direction="E"
     comp = Compass()  
     
-    def move(self,dir,degrees):
-        
+    def move(self,dir,degrees):        
         if dir in "LR":
             self.direction = self.comp.turnCompassPoint(self.direction,dir,degrees)
             return
@@ -27,7 +26,26 @@ class Position:
         if dir in self.comp.compasspoints:
             dir=self.comp.compasspoints[dir]
             self.ew+=dir[0]*degrees
-            self.ns+=dir[1]*degrees                
+            self.ns+=dir[1]*degrees      
+
+    def move_way(self,dir,degrees):        
+        if dir in self.comp.compasspoints:
+            dir=self.comp.compasspoints[dir]
+            self.ew_way+=dir[0]*degrees
+            self.ns_way+=dir[1]*degrees  
+            return
+
+        if dir in 'LR':
+            degrees = (degrees // 90)
+            degrees %= 4
+            if dir == 'L':
+                degrees = 4 - degrees
+            for _ in range(degrees):
+                self.ew_way, self.ns_way = self.ns_way, - self.ew_way
+        
+        if dir == "F":
+            self.ew += degrees * self.ew_way
+            self.ns += degrees * self.ns_way   
 
 def main():
     readinput()
@@ -45,26 +63,11 @@ def first_star():
 
 def second_star():
     pos = Position()   
-    for line in input:  
-        action,qty=line[0],int(line[1:])        
-
-        if action in pos.comp.compasspoints:
-            ew, ns = pos.comp.compasspoints[action]
-            pos.ew_way += qty * ew
-            pos.ns_way += qty * ns
-        else:
-            degrees = (qty // 90)
-            degrees %= 4
-            if action == 'L':
-                degrees = 4 - degrees
-            if action in 'LR':
-                for _ in range(degrees):
-                    pos.ew_way, pos.ns_way = pos.ns_way, - pos.ew_way
-            else:               
-                pos.ew += qty * pos.ew_way
-                pos.ns += qty * pos.ns_way
-     
-    print("Result Second Star")
+    for line in input:
+        action,qty=line[0],int(line[1:])      
+        pos.move_way(action,qty)
+       
+    print("Result Second Star")   
     print(str(abs(pos.ew) + abs(pos.ns) ))
 
 if __name__ == '__main__':
