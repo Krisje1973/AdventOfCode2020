@@ -13,33 +13,34 @@ class Position:
     dirs = {'N': (0, 1), 'E': (1, 0), 'S': (0, -1), 'W': (-1, 0)}
     ns,ew = 0,0
     ns_way,ew_way = 1,10
-    direction=0
-    directions=["E","S","W","N"]
+    direction="E"
+  
     def turn(self,dir,degrees):       
         degrees = (degrees // 90)
-        if dir=="R":
-            self.direction += degrees
-        else:
-            self.direction -= degrees
-        
-        if self.direction<0:
-            self.direction = self.directions.index(self.directions[self.direction])
-        if self.direction>=len(self.directions):
-            self.direction = self.direction % len(self.directions)
+        cnt=0
+        if degrees==3:
+            cnt+=1
+        if dir == "L":
+            degrees=-degrees
+        dirs = list(self.dirs.keys())
+        idx = dirs.index(self.direction) + degrees
+        idx %= len(dirs)
+        direction = (dirs[idx:] + dirs[:idx])[0] 
+        self.direction = direction      
 
     def move(self,dir,degrees):
         
-        if dir == "L" or dir=="R":
+        if dir in "LR":
             self.turn(dir,degrees)
             return
-        
-        if dir != "F":          
-            dir = self.dirs[self.directions[self.directions.index(dir)]] 
-        else:
-            dir = self.dirs[self.directions[self.direction]]
+         
+        if dir == "F":
+            dir = self.direction
 
-        self.ew+=dir[0]*degrees
-        self.ns+=dir[1]*degrees                
+        if dir in self.dirs:
+            dir=self.dirs[dir]
+            self.ew+=dir[0]*degrees
+            self.ns+=dir[1]*degrees                
 
 def main():
     readinput()
