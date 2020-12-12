@@ -19,7 +19,7 @@ def readinput_lines_as_ints(filename):
 class Compass:
   compasspoints = {'N': (0, 1), 'E': (1, 0), 'S': (0, -1), 'W': (-1, 0)} # Can be used for north/south, east/west calculation
 
-  def turnCompassPoint(self,compaspoints,degrees, currentdirection,turndirection):     
+  def turnCompassPoint(self,currentdirection,turndirection,degrees):     
     degrees = (degrees // 90)   
     if turndirection == "L":
         degrees=-degrees

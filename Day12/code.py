@@ -10,26 +10,22 @@ def readinput():
     input = readinput_lines(r"Day12\input.txt")
 
 class Position:
-    dirs = {'N': (0, 1), 'E': (1, 0), 'S': (0, -1), 'W': (-1, 0)}
     ns,ew = 0,0
     ns_way,ew_way = 1,10
     direction="E"
-  
-    def turn(self,dir,degrees):  
-        comp = Compass()     
-        self.direction = comp.turnCompassPoint(self.dirs,degrees,self.direction,dir)
-
+    comp = Compass()  
+    
     def move(self,dir,degrees):
         
         if dir in "LR":
-            self.turn(dir,degrees)
+            self.direction = self.comp.turnCompassPoint(self.direction,dir,degrees)
             return
          
         if dir == "F":
             dir = self.direction
 
-        if dir in self.dirs:
-            dir=self.dirs[dir]
+        if dir in self.comp.compasspoints:
+            dir=self.comp.compasspoints[dir]
             self.ew+=dir[0]*degrees
             self.ns+=dir[1]*degrees                
 
@@ -52,8 +48,8 @@ def second_star():
     for line in input:  
         action,qty=line[0],int(line[1:])        
 
-        if action in pos.dirs:
-            ew, ns = pos.dirs[action]
+        if action in pos.comp.compasspoints:
+            ew, ns = pos.comp.compasspoints[action]
             pos.ew_way += qty * ew
             pos.ns_way += qty * ns
         else:
