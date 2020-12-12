@@ -5,6 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from AOCHelper import * 
 
 input=[]
+grid_helper = GridHelper()
 def readinput():
     global input
     input = readinput_lines(r"Day11\input.txt")
@@ -19,7 +20,7 @@ def star1(grid):
 
     for y, row in enumerate(grid):
         for x, seat in enumerate(row):            
-            ct = Counter(get_suroundings(grid,x,y,4))
+            ct = Counter(grid_helper.get_suroundings(grid,x,y,4))
             if seat == 'L' and ct['#'] == 0:
                 newgrid[y][x] = '#'
             elif seat == '#' and ct['#'] >= 4:
@@ -50,7 +51,6 @@ def star2(grid):
                     if 0 <= nx < rows and 0 <= ny < rowlength:
                         occ += grid[nx][ny] == '#'
 
-
             if seat == 'L' and occ == 0:
                 newgrid[y][x] = '#'
             elif seat == '#' and occ >= 5:
@@ -58,8 +58,6 @@ def star2(grid):
             else:
                 newgrid[y][x] = grid[y][x]
     return newgrid
-
-
 
 def first_star():  
     grid = input
@@ -70,7 +68,7 @@ def first_star():
 
         grid = loop
 
-    occupied = join_lines_from_list(grid)
+    occupied = grid_helper.join_lines_from_list(grid)
     print("Result First Star")
     print(occupied.count("#"))
 
@@ -83,7 +81,7 @@ def second_star():
 
         grid = loop
 
-    occupied = join_lines_from_list(grid)
+    occupied = grid_helper.join_lines_from_list(grid)
     print("Result Second Star")
     print(occupied.count("#"))
   
