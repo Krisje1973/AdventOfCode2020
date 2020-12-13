@@ -17,17 +17,14 @@ def readinput():
     global input
     input = readinput_lines(r"Day13\input.txt")
     # to High: 803025030761668
-    # to low : 85850948895292
-    #          2270925272303824.0
-    #          99466969593960.0
+    #          803025030761664 !!!!!!
+    # to low : 85850948895292            
                
-  
-
 def main():
     readinput()
     #first_star()
-    second_star()        
-
+    second_star() 
+  
 def first_star():  
     depart = int(input[0])
     busses = [int(x) for x in input[1].split(",") if x != "x"]
@@ -45,23 +42,25 @@ def second_star():
     n = []
     a= []
     for i, s in enumerate(busses):
-        if s == "x":
+        if s == "x":  
             continue
         s = int(s)
         if not i:
-            starts.append((0, s))
+            starts.append(i)
             n.append(s)
             a.append(0)
         else:
-            starts.append((s - i, s))
+            starts.append(i)
             n.append(s)
             a.append(s - i)
       
-    #n=[17,13,19]
-    #a=[0,11,16]
+    #n=[17,x,13,19]
+    #a=[0,1,2,3]
     print(n)
     print(a)
-    print(chinese_remainder(n,a))
+    print(starts)
+    negatives = sum([n <0  for n in a])
+    print(chinese_remainder(n,a)-negatives)
     # Expected result = 3417
     print("Result Second Star")   
 
@@ -77,7 +76,8 @@ def mul_inv(a, b):
     b0= b
     x0, x1= 0,1
     if b== 1: return 1
-    while a>1 :
+    
+    while a>1:
         q=a// b
         a, b= b, a%b
         x0, x1=x1 -q *x0, x0
