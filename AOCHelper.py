@@ -1,3 +1,4 @@
+from functools import reduce
 def readinput_dict_as_ints(filename):    
     input = {}
     file = open(filename, "r")
@@ -80,3 +81,24 @@ class GridHelper:
       combi_vals[offset] = combi_val      
          
     return combis,combi_vals
+class ChineseReminder():
+  def calculate_chinese_remainder(self,n, a):
+    rem=0
+    neg = sum([ne<0 for ne in a])
+    prod=reduce(lambda a, b: a*b, n)
+    for n_i, a_i in zip(n,a):
+      p=prod/n_i
+      rem += a_i* self.mul_inv(p, n_i)*p
+    return (rem % prod) - neg
+
+  def mul_inv(self,a, b):
+    b0= b
+    x0, x1= 0,1
+    if b== 1: return 1
+    
+    while a>1:
+        q=a// b
+        a, b= b, a%b
+        x0, x1=x1 -q *x0, x0
+    if x1<0 : x1+= b0
+    return x1
