@@ -82,23 +82,39 @@ class GridHelper:
          
     return combis,combi_vals
 class ChineseReminder():
-  def calculate_chinese_remainder(self,n, a):
-    rem=0
-    neg = sum([ne<0 for ne in a])
-    prod=reduce(lambda a, b: a*b, n)
-    for n_i, a_i in zip(n,a):
-      p=prod/n_i
-      rem += a_i* self.mul_inv(p, n_i)*p
-    return (rem % prod) - neg
+  def calculate_chinese_remainder(self,rem, mod):
+    #
+    # Solves and finds X for a system of congruences:
+    #   X = a_1 (mod n_1)
+    #   X = a_2 (mod n_2)
+    #   ...
+    #   X = a_N (mod n_N)
+    #
+    # Solutions afterwards can be made by adding/subtracting by MOD
+    # Returns X (the initial value), and MOD (the interval where it repeats)
+    #
+    # Additional Info: https://brilliant.org/wiki/chinese-remainder-theorem/
 
-  def mul_inv(self,a, b):
-    b0= b
-    x0, x1= 0,1
-    if b== 1: return 1
+    a1 = rem[0]
+    m1 = mod[0]
+    for a2, m2 in zip(rem[1:], mod[1:]):
+        gcd, x, y = self.extended_gcd(m1, m2)
+        if a1 % gcd != a2 % gcd:
+            raise ValueError("No solutions for given input.")
+        _, x, y = self.extended_gcd(m1 // gcd, m2 // gcd)
+        MOD = m1 // gcd * m2
+        X = (a1 * (m2 // gcd) * y + a2 * (m1 // gcd) * x) % MOD
+        a1 = X
+        m1 = MOD
+    return a1, MOD
     
-    while a>1:
-        q=a// b
-        a, b= b, a%b
-        x0, x1=x1 -q *x0, x0
-    if x1<0 : x1+= b0
-    return x1
+  def extended_gcd(self,a, b):
+      x, y, u, v = 0, 1, 1, 0
+      while a != 0:
+          q, r = b // a, b % a
+          m, n = x - u * q, y - v * q
+          b, a, x, y, u, v = a, r, u, v, m, n
+      gcd = b
+      return gcd, x, y  # x, y are for [ax + by = gcd]
+
+ 

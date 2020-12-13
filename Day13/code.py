@@ -36,26 +36,14 @@ def first_star():
     print(busses[earliestidx] * earliest)
    
 def second_star():
-   
-    starts=[]
-    busses = [bus for bus in input[1].split(",")]
-    n = []
-    a= []
-    for i, s in enumerate(busses):
-        if s == "x":  
-            continue
-        s = int(s)
-        if not i:
-            starts.append(i)
-            n.append(s)
-            a.append(0)
-        else:
-            starts.append(i)
-            n.append(s)
-            a.append(s - i)     
-    
-    print("Result Second Star")   
-    print(ChineseReminder().calculate_chinese_remainder(n,a))
+    remainder = []
+    modulo = []
+    for ind, bus_id in ((i, int(j)) for i, j in enumerate(input[1].split(",")) if j != "x"):
+        remainder.append(-ind)
+        modulo.append(bus_id)
+  
+    print("Result Second Star")  
+    print(ChineseReminder().calculate_chinese_remainder(remainder,modulo)[0])
 
 if __name__ == '__main__':
     main()
