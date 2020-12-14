@@ -16,6 +16,37 @@ def readinput_lines_as_ints(filename):
     for line in [line.strip() for line in file]:
       input.append(int(line)) 
     return input
+class Binary:
+  def get_binary_as_string(self,val,length=0):
+    bval = bin(int(val)).replace("0b","")  
+    return "".ljust(length-len(bval), "0") + bval
+
+  def get_binary_as_string_from_mask(self,val,mask,match):
+    bval = self.get_binary_as_string(val,len(mask))
+    binstr = ""
+    for i in range(len(bval)):     
+      if mask[i] == match:
+          binstr+=bval[i]
+      else:
+          binstr+=mask[i]
+    return binstr
+  
+  def split_binary_as_list(self,val,match):
+    splitted = []
+    matches = pow(2,val.count(match))
+    for i in range(matches):
+        splitted.append("")       
+    for n in range(len(val)):       
+        v=False  
+        splitted.sort()                      
+        for i in range(matches):  
+            v = v == False                 
+            if val[n] == match:
+                splitted[i] += str(int(v))
+            else:
+                  splitted[i] += val[n] 
+    return splitted
+ 
 
 class Compass:
   compasspoints = {'N': (0, 1), 'E': (1, 0), 'S': (0, -1), 'W': (-1, 0)} # Can be used for north/south, east/west calculation
