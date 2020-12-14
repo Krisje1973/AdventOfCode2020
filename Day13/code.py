@@ -38,10 +38,15 @@ def first_star():
 def second_star():
     remainder = []
     modulo = []
+    begin = int(input[0])
+    best = 1e18, -1
     for ind, bus_id in ((i, int(j)) for i, j in enumerate(input[1].split(",")) if j != "x"):
         remainder.append(-ind)
         modulo.append(bus_id)
-  
+        best = min(best, (-begin % bus_id, bus_id))
+    
+    print("Result First Star")   
+    print(best[0] * best[1])
     print("Result Second Star")  
     print(ChineseReminder().calculate_chinese_remainder(remainder,modulo)[0])
 
