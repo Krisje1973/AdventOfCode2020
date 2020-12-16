@@ -1,4 +1,6 @@
 from functools import reduce
+from collections import defaultdict 
+
 def readinput_dict_as_ints(filename):    
     input = {}
     file = open(filename, "r")
@@ -46,8 +48,59 @@ class Binary:
             else:
                   splitted[i] += val[n] 
     return splitted
- 
 
+#Class to represent a graph 
+class Graph: 
+    def __init__(self,vertices): 
+        self.graph = defaultdict(list) #dictionary containing adjacency List 
+        self.V = vertices #No. of vertices 
+  
+    # function to add an edge to graph 
+    def addEdge(self,u,v): 
+        self.graph[u].append(v) 
+  
+    # A recursive function used by topologicalSort 
+    def topologicalSortUtil(self,v,visited,stack): 
+  
+        # Mark the current node as visited. 
+        visited[v] = True
+  
+        # Recur for all the vertices adjacent to this vertex 
+        for i in self.graph[v]: 
+            if visited[i] == False: 
+                self.topologicalSortUtil(i,visited,stack) 
+  
+        # Push current vertex to stack which stores result 
+        stack.insert(0,v) 
+  
+    # The function to do Topological Sort. It uses recursive  
+    # topologicalSortUtil() 
+    def topologicalSort(self): 
+        # Mark all the vertices as not visited 
+        visited = [False]*self.V 
+        stack =[] 
+  
+        # Call the recursive helper function to store Topological 
+        # Sort starting from all vertices one by one 
+        for i in range(self.V): 
+            if visited[i] == False: 
+                self.topologicalSortUtil(i,visited,stack) 
+        return stack
+class FileHelper:
+  def get_arrays_from_separator(self,lines,separator):
+    # Reads all lines and creates array for each seperator found (mostly blanc line)
+    arrays = []    
+    lineid = 0
+   
+    while lineid < len(lines):
+        arr = []
+        while lineid < len(lines) and lines[lineid]:
+            arr.append(lines[lineid])
+            lineid += 1
+        lineid += 1
+        arrays.append(arr[len(arrays) != 0:])
+
+    return arrays
 class Compass:
   compasspoints = {'N': (0, 1), 'E': (1, 0), 'S': (0, -1), 'W': (-1, 0)} # Can be used for north/south, east/west calculation
 
