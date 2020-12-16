@@ -10,7 +10,7 @@ from AOCHelper import *
 input=[]
 def readinput():
     global input
-    input = readinput_lines(r"Day15\input_ex.txt")
+    input = readinput_lines(r"Day15\input.txt")
   
 
 def main():
@@ -31,7 +31,9 @@ def calculate(spoken):
         # seen last = id
         # last = count of id - nul
         seen[last], last = id, id - seen[last] if seen[last] else 0
-
+        """v=last
+        last = id - seen[last] if seen[last] else 0
+        seen[v]= id"""
     return last
 
 def first_star():  
