@@ -68,7 +68,6 @@ def second_star():
             cand_rules = []
             for rule in rules:
                 (low1, up1, low2, up2), depart = rule
-                # This check can be replaced using binary search (after sorting)
                 if all(low1 <= val <= up1 or low2 <= val <= up2 for val in valid_tickets[id]):
                     cand_rules.append(rule)
             if len(cand_rules) == 1:  # Only 1 rule works

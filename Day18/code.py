@@ -7,7 +7,7 @@ from AOCHelper import *
 input=[]
 def readinput():
     global input
-    input = readinput_lines(r"Day17\input.txt")
+    input = readinput_lines(r"Day16\input.txt")
   
 
 def main():
