@@ -1,6 +1,5 @@
 from functools import reduce
 from collections import defaultdict 
-
 def readinput_dict_as_ints(filename):    
     input = {}
     file = open(filename, "r")
@@ -87,6 +86,37 @@ class Graph:
                 self.topologicalSortUtil(i,visited,stack) 
         return stack
 class FileHelper:
+  
+  def readinput_dict_as_ints(self,filename):    
+      input = {}
+      file = open(filename, "r")
+      for line in file:
+        input[int(line)] = int(line)
+      return input
+
+  def readinput_lines(self,filename):   
+      file = open(filename, "r")    
+      return [line.strip() for line in file]
+  
+  def readinput_lines_and_replace(self,filename,replaces):  
+      #Usage :  input = file.readinput_lines_and_replace(r"Day17\input_ex.txt",[[".","0"],["#","1"]]) 
+      file = open(filename, "r")    
+      lines = []
+      for line in [line.strip() for line in file]:
+        for replace in replaces:
+          line = line.replace(replace[0],replace[1])
+        lines.append(line)
+
+      return lines
+
+  
+  def readinput_lines_as_ints(self,filename):   
+      file = open(filename, "r")    
+      input=[]
+      for line in [line.strip() for line in file]:
+        input.append(int(line)) 
+      return input
+
   def get_arrays_from_separator(self,lines,separator):
     # Reads all lines and creates array for each seperator found (mostly blanc line)
     arrays = []    
