@@ -27,14 +27,16 @@ def main():
 
 def find_rule(rule='0', cnt=0):
 
+    if cnt > 50:
+        return ""
     if rules[rule][0] == '"': 
         return rules[rule][1]
 
     reg = ""
     split = rules[rule].split('|')
-    for s in split:
-        for t in s.split():
-           reg += find_rule(t, cnt+1)
+    for rule in split:
+        for s in rule.split():
+           reg += find_rule(s, cnt+1)
         reg += "|"
 
     return "(1)".replace("1",reg[:len(reg)-1])
@@ -45,8 +47,12 @@ def first_star():
     print(len([*filter(reg.fullmatch,answers)]))  
     
 def second_star():
-   
-    print("Result Second Star")   
+    global rules
+    rules["8"] = "42 | 42 8"
+    rules["11"] = "42 31 | 42 11 31"
     
+    reg = re.compile(find_rule())   
+    print("Result Second Star")   
+    print(len([*filter(reg.fullmatch,answers)]))  
 if __name__ == '__main__':
     main()
