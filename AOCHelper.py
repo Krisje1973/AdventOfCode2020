@@ -1,5 +1,7 @@
 from functools import reduce
 from collections import defaultdict 
+import re
+
 def readinput_dict_as_ints(filename):    
     input = {}
     file = open(filename, "r")
@@ -141,7 +143,8 @@ class Compass:
     dirs = list(self.compasspoints.keys())
     idx = dirs.index(currentdirection) + degrees
     idx %= len(dirs)
-    return (dirs[idx:] + dirs[:idx])[0]       
+    return (dirs[idx:] + dirs[:idx])[0]     
+
 class GridHelper:
   def get_suroundings(self,grid,x,y,count):
     start =-1
@@ -231,4 +234,6 @@ class ChineseReminder():
       gcd = b
       return gcd, x, y  # x, y are for [ax + by = gcd]
 
- 
+class RegexHelper():
+  def is_string_numeric_regex(self,s):
+    return re.search('^[0-9]+$',s)
