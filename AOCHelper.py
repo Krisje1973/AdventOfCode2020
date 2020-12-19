@@ -130,7 +130,7 @@ class FileHelper:
             arr.append(lines[lineid])
             lineid += 1
         lineid += 1
-        arrays.append(arr[len(arrays) != 0:])
+        arrays.append(arr)
 
     return arrays
 class Compass:
