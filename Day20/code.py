@@ -44,29 +44,12 @@ class Tile():
         self.rr = helper.get_int_from_binary_reversed_string(r)        
 
 def find_neigborgs(tile):
-    
+    corners = [tile.t,tile.b,tile.l,tile.r]
     for t in tiles:
         c=tiles[t]      
-        top = tile.t  
-        if c.t == top or c.tr == top or c.b == top or c.br == top: 
-            tile.tn+=1 
-        if c.l==top or c.lr == top or c.r==top or c.rr==top:
-            tile.tn+=1
-        top = tile.b  
-        if c.t == top or c.tr == top or c.b == top or c.br == top: 
-            tile.tn+=1 
-        if c.l==top or c.lr == top or c.r==top or c.rr==top:
-            tile.tn+=1
-        top = tile.l 
-        if c.t == top or c.tr == top or c.b == top or c.br == top: 
-            tile.tn+=1 
-        if c.l==top or c.lr == top or c.r==top or c.rr==top:
-            tile.tn+=1
-        top = tile.r 
-        if c.t == top or c.tr == top or c.b == top or c.br == top: 
-            tile.tn+=1 
-        if c.l==top or c.lr == top or c.r==top or c.rr==top:
-            tile.tn+=1
+        for corner in corners:          
+            if c.t == corner or c.tr == corner or c.b == corner or c.br == corner or c.l==corner or c.lr == corner or c.r==corner or c.rr==corner: 
+                tile.tn+=1      
     
 def main():
     readinput()
@@ -77,8 +60,7 @@ def first_star():
     tot = 1
     for t in tiles:        
         tile = tiles[t]
-        find_neigborgs(tile)
-        print(t + " - " + str(tile.tn))
+        find_neigborgs(tile)       
         if tile.tn==6: 
             tot *= int(t)
         
@@ -86,8 +68,6 @@ def first_star():
     print(tot) 
    
 def second_star():
-   
-       
     print("Result Second Star")   
     
 if __name__ == '__main__':
