@@ -11,7 +11,7 @@ def readinput():
     global data
     global tiles
     helper = FileHelper()
-    data = helper.readinput_lines_and_replace(r"Day20\input_ex.txt",[[".","0"],["#","1"]]) 
+    data = helper.readinput_lines_and_replace(r"Day20\input.txt",[[".","0"],["#","1"]]) 
     arr = helper.get_arrays_from_separator(data,"")
     for ar in arr:
         no = ar[0].split(":")[0].replace("Tile ","")
@@ -25,6 +25,8 @@ def readinput():
 class Tile():
     no,l,t,r,b,lr,tr,rr,br=[0,0,0,0,0,0,0,0,0]
     lines=[]
+    rn,ln,tn,bn=0,0,0,0
+
     def calc_borders(self):
         helper = Binary()
         self.t=helper.get_int_from_binary_string(self.lines[0])
@@ -41,7 +43,30 @@ class Tile():
         self.r = helper.get_int_from_binary_string(r)
         self.rr = helper.get_int_from_binary_reversed_string(r)        
 
-
+def find_neigborgs(tile):
+    
+    for t in tiles:
+        c=tiles[t]      
+        top = tile.t  
+        if c.t == top or c.tr == top or c.b == top or c.br == top: 
+            tile.tn+=1 
+        if c.l==top or c.lr == top or c.r==top or c.rr==top:
+            tile.tn+=1
+        top = tile.b  
+        if c.t == top or c.tr == top or c.b == top or c.br == top: 
+            tile.tn+=1 
+        if c.l==top or c.lr == top or c.r==top or c.rr==top:
+            tile.tn+=1
+        top = tile.l 
+        if c.t == top or c.tr == top or c.b == top or c.br == top: 
+            tile.tn+=1 
+        if c.l==top or c.lr == top or c.r==top or c.rr==top:
+            tile.tn+=1
+        top = tile.r 
+        if c.t == top or c.tr == top or c.b == top or c.br == top: 
+            tile.tn+=1 
+        if c.l==top or c.lr == top or c.r==top or c.rr==top:
+            tile.tn+=1
     
 def main():
     readinput()
@@ -49,20 +74,16 @@ def main():
     second_star()        
 
 def first_star():  
-   
-    
-    for t in tiles:
+    tot = 1
+    for t in tiles:        
         tile = tiles[t]
-        print("Tile " + t)
-        print(tile.t)
-        print(tile.tr)
-        print(tile.b)
-        print(tile.br)
-
-
+        find_neigborgs(tile)
+        print(t + " - " + str(tile.tn))
+        if tile.tn==6: 
+            tot *= int(t)
         
-        
-    print("Result First Star")   
+    print("Result First Star")  
+    print(tot) 
    
 def second_star():
    
