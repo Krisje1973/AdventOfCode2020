@@ -29,6 +29,7 @@ def find_rule(rule='0', cnt=0):
 
     if cnt > 50:
         return ""
+        
     if rules[rule][0] == '"': 
         return rules[rule][1]
 

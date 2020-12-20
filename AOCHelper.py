@@ -50,6 +50,13 @@ class Binary:
                   splitted[i] += val[n] 
     return splitted
 
+  def get_int_from_binary_string(self,s):
+    return int(s,2)
+
+  def get_int_from_binary_reversed_string(self,s):
+    return int(s[::-1],2)
+    
+
 #Class to represent a graph 
 class Graph: 
     def __init__(self,vertices): 
@@ -127,7 +134,7 @@ class FileHelper:
     while lineid < len(lines):
         arr = []
         while lineid < len(lines) and lines[lineid]:
-            arr.append(lines[lineid])
+            arr.append(lines[lineid].strip())
             lineid += 1
         lineid += 1
         arrays.append(arr)
