@@ -11,7 +11,7 @@ def readinput():
     global data
     global p1,p2
     helper = FileHelper()   
-    data = readinput_lines(r"Day22\input_ex.txt")
+    data = readinput_lines(r"Day22\input.txt")
     a,b = helper.get_arrays_from_separator(data," ")
     for i in a[1:]:
         p1.append(int(i))
@@ -35,41 +35,31 @@ def play():
         p2.pop(0)
 
 def play2(p1,p2):   
-    pd=[]
+    seen = set()
     cnt=0
     while len(p1)>0 and len(p2)>0:
         cnt+=1
         # Played before: p1 wins
-        d=p1.copy()
-        d.extend(p2)
-        if pd.count(d):
+        label = tuple(p1), tuple(p2)
+        if label in seen:
             p2.clear()
             return p1,p2
-        pd.append(d)    
-
-        """
-        # Enough cards
-        if len(p1) < p1[0] or len(p2) < p2[0]:
-            if p1[0] > p2[0]:
-                p2.clear()
-                return p1,p2
-            return p1,p2
-           """
+        seen.add(label)
 
         # Combat 
-        if len(p1) >= p1[0] and len(p2) >= p2[0]:
-            r1,r2 = play2(p1[1:p1[0]+1],p2[1:p2[0]+1])
+        c1, *p1 = p1
+        c2, *p2 = p2
+        if c1 <= len(p1) and c2 <= len(p2):   
+            r1,r2 = play2(p1[:c1],p2[:c2])
             wp= len(r1)>0 
-        else: wp= p1[0] > p2[0]
+        else: wp=c1>c2
 
         if wp:
-            p1.append(p1[0])
-            p1.append(p2[0])
+            p1.append(c1)
+            p1.append(c2)
         else: 
-            p2.append(p2[0])
-            p2.append(p1[0])
-        p1.pop(0)
-        p2.pop(0)
+            p2.append(c2)
+            p2.append(c1)
     
     return p1,p2
     
