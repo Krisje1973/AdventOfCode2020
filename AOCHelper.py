@@ -407,6 +407,7 @@ class FileHelper:
     while lineid < len(lines):
         arr = []
         while lineid < len(lines) and lines[lineid]:
+            if lines[lineid]==separator: break
             arr.append(lines[lineid].strip())
             lineid += 1
         lineid += 1
