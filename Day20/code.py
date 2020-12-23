@@ -28,7 +28,6 @@ class Tile():
     no,l,t,r,b,lr,tr,rr,br=[0,0,0,0,0,0,0,0,0]
     lines=[]
     rn,ln,tn,bn=0,0,0,0
-    neigborgs = {}
     corners=set()
     r_corners=set()
     def calc_borders(self):
@@ -76,7 +75,7 @@ def find_neigborgs(tile):
         for corner in corners:          
             if c.t == corner or c.tr == corner or c.b == corner or c.br == corner or c.l==corner or c.lr == corner or c.r==corner or c.rr==corner: 
                 tile.tn+=1  
-                tile.neigborgs[t]=c.tn  
+               
 
 def find_candidates(tile,tiles):
     cand = {}
@@ -98,16 +97,19 @@ def find_candidates(tile,tiles):
 
 def find_corners_sides(tiles):
     corners={}
-    sides = {}     
+    sides = {} 
+    others = {}     
     for t in tiles:        
         tile = tiles[t]
         find_neigborgs(tile)    
         if tile.tn==6: 
            corners[t] =tile
-        if tile.tn==7: 
+        elif tile.tn==7: 
             sides[t] = tile
-
-    return corners,sides
+        else:
+            others[t] = tile
+        
+    return corners,sides,others
 
 def second_star():
     """corners=[]
@@ -123,8 +125,8 @@ def second_star():
             if tile.neigborgs[neig] == 7:
                 sides[neig] = tiles[neig]
     """
-    corners,sides={},{}
-    corners,sides = find_corners_sides(tiles)
+    corners,sides,others={},{},{}
+    corners,sides,others = find_corners_sides(tiles)
     print(len(sides))
     print(len(corners))
     dim = math.sqrt(len(tiles))
@@ -135,6 +137,7 @@ def second_star():
     board=[]
     links={}
     links=find_candidates(start,sides)
+    first = links[next(iter(links))]
     board.append(start)
     while len(sides) + len(corners) > 0:        
         # Corner
@@ -150,6 +153,19 @@ def second_star():
       
         board.append(first)
         cnt+=1
+    
+    start = tiles[str(board[1].no)]
+    links=find_candidates(start,others)
+    board.append(start)
+    while len(others) > 0:       
+        first = links[next(iter(links))]
+        links=find_candidates(first,others)
+        others.pop(str(first.no))
+      
+        board.append(first)
+        cnt+=1
+
+
     print(len(board))
     print(dim)
     monster = """\
