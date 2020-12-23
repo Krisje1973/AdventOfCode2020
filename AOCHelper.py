@@ -391,6 +391,13 @@ class FileHelper:
 
       return lines
 
+  def readinput_lines_as_list_ints(self,filename):   
+      file = open(filename, "r")    
+      input=[]
+      for line in [line.strip() for line in file]:
+          for i in line:
+            input.append(int(i)) 
+      return input
   
   def readinput_lines_as_ints(self,filename):   
       file = open(filename, "r")    
