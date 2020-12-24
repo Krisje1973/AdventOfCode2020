@@ -18,7 +18,7 @@ def main():
 
 def move(times):
     global data
-    li={}
+    
     for _ in range(int(times)):
         pick = data[1:4]
         dest = data[0] - 1 if data[0] > 1 else 9
@@ -43,15 +43,11 @@ def move(times):
 def first_star():   
    
     move(100)
-
-    
     print("Result First Star")   
     print(data)
    
 def second_star():
-    global data
-   
     print("Result Second Star")   
-    print(data)
+    
 if __name__ == '__main__':
     main()
