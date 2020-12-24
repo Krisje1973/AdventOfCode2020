@@ -9,7 +9,7 @@ data=[]
 def readinput():
     global data
     helper = FileHelper()   
-    data = helper.readinput_lines_as_list_ints(r"Day24\input.txt")
+    data = helper.readinput_lines(r"Day24\input.txt")
     
 def main():
     readinput()
@@ -17,10 +17,33 @@ def main():
     second_star()        
 
 def first_star():   
-   
-    print("Result First Star")   
-    print(data)
-   
+    # Ex: 10 tiles are black.
+    comp = Compass()
+    hp = comp.hexaspoints
+    
+    grid=set()
+    for line in data:
+        pos=""
+        po=[]
+        for co in [c.upper() for c in line]:
+            pos+=co
+            if pos in hp.keys():
+                po.append(hp[pos])
+                pos=""
+        x,y=0,0 
+        for co in po:
+            x+=co[0]
+            y+=co[1]
+        
+        c=x*1000+y
+        if c not in grid:
+            grid.add(c)  
+        else: grid.remove(c)
+            
+    
+    print("Result First Star")  
+    print(len(grid)) 
+  
 def second_star():
     global data
    
