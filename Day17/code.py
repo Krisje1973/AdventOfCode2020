@@ -42,10 +42,8 @@ def cycle_cubes():
         if not pocket[p] and ne == 3: 
             new_pocket[p] = 1
    
-    for p in new_pocket:
-        pocket[p]=new_pocket[p]
-
-
+    pocket=new_pocket
+  
 def first_star():  
     # active    = if 2 or 3 neighbors active dan inactive
     # nonactive = if exactly 3 neighbors  active  dan active 
