@@ -77,16 +77,23 @@ def first_star():
     global pocket
     for y,d in enumerate(data):
         for x,p in enumerate(d):
-            pocket[(x,y,0,0)] = int(p) 
+            pocket[(x,y,0)] = int(p) 
     
     for _ in range(6):
-        cycle_cubes_2()
+        cycle_cubes()
     
     print("Result First Star")   
     print(sum(pocket.values()))
 def second_star():
-     
-    print("Result Second Star")   
+    global pocket
+    pocket=defaultdict(int)   
+    for y,d in enumerate(data):
+        for x,p in enumerate(d):
+            pocket[(x,y,0,0)] = int(p) 
     
+    for _ in range(6):
+        cycle_cubes_2()
+    print("Result Second Star")   
+    print(sum(pocket.values()))
 if __name__ == '__main__':
     main()
