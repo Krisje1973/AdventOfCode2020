@@ -5,11 +5,13 @@ from collections import Counter
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from AOCHelper import * 
 
-input=[]
+data=[]
+pocket=set()
 file = FileHelper()
 def readinput():
-    global input
-    input = file.readinput_lines_and_replace(r"Day17\input_ex.txt",[[".","0"],["#","1"]])
+    global data
+    data = file.readinput_lines_and_replace(r"Day17\input_ex.txt",[[".","0"],["#","1"]])
+    #set((x + dx, y + dy) for x, y in state.keys() for dx, dy in dirs.values())
     
 
 def main():
@@ -27,7 +29,7 @@ def run_cycle(source):
         print(source[pock][2])
 
 def first_star():  
-    # active    = if 2 or 3 neighbors  active dan inactive
+    # active    = if 2 or 3 neighbors active dan inactive
     # nonactive = if exactly 3 neighbors  active  dan active 
     deltas_3d = []
 
@@ -41,7 +43,7 @@ def first_star():
     offset: int = size // 2
     world = [ [ [0 for _ in range(size)] for _ in range(size)] for _ in range(size)]
 
-    for y, line in enumerate(input):
+    for y, line in enumerate(data):
         for x, pos in enumerate(line):
             world[0 + offset][y + offset][x + offset] = pos
 
