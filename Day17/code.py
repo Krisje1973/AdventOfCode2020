@@ -6,57 +6,58 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from AOCHelper import * 
 
 data=[]
-pocket=set()
+pocket=defaultdict(int)
 file = FileHelper()
 def readinput():
     global data
     data = file.readinput_lines_and_replace(r"Day17\input_ex.txt",[[".","0"],["#","1"]])
-    #set((x + dx, y + dy) for x, y in state.keys() for dx, dy in dirs.values())
-    
-
+   
 def main():
     readinput()
     first_star()
     second_star()        
 
-def run_cycle(source):
-    source.append([0 for s in range(len(source[0]))])
-    for pock in source:
-        new_pock = [0].append(pock).append([0])
-        x,y,pock = pock
+def cycle_cubes():
+    global pocket
+    off = [(x, y, z) for x in range(-1, 2) for y in range(-1, 2) for z in range(-1, 2) if not x == y == z == 0]
+    neigb = set((x + dx, y + dy,z + dz) for x, y, z in pocket.keys() for dx, dy, dz in off)
+    
+    new_pocket = pocket.copy()
+    cp = pocket.copy()
+    for n in neigb:
+        if n not in pocket:
+            pocket[n] = 0
+
+    for p in pocket:
+        ne=0
+        for n in off:      
+            ne+= cp[p[0]+n[0],p[1]+n[1],p[2]+n[2]]
+
+        if pocket[p] and ne in [2,3]: 
+            new_pocket[p] = 0
+        if not pocket[p] and ne == 3: 
+            new_pocket[p] = 1
     
 
-        print(source[pock][2])
+    pocket=new_pocket
+
+
 
 def first_star():  
     # active    = if 2 or 3 neighbors active dan inactive
     # nonactive = if exactly 3 neighbors  active  dan active 
-    deltas_3d = []
-
-    for z in range(3):
-        for y in range(3):
-            for x in range(3):
-                if (x - 1) != 0 or (y - 1) != 0 or (z - 1) != 0:
-                    deltas_3d.append( (x - 1, y - 1, z - 1) )
-
-    size: int = 25
-    offset: int = size // 2
-    world = [ [ [0 for _ in range(size)] for _ in range(size)] for _ in range(size)]
-
-    for y, line in enumerate(data):
-        for x, pos in enumerate(line):
-            world[0 + offset][y + offset][x + offset] = pos
-
+    global pocket
+    for y,d in enumerate(data):
+        for x,p in enumerate(d):
+            pocket[(x,y,0)] = int(p) 
     
-    for line in [line in world]:
-        print(sum(line))
-
-   
+    for _ in range(1,7):
+        cycle_cubes()
+    
     print("Result First Star")   
-    
+    print(sum(pocket.values()))
 def second_star():
-   
-       
+     
     print("Result Second Star")   
     
 if __name__ == '__main__':
