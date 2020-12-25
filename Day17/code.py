@@ -43,6 +43,33 @@ def cycle_cubes():
             new_pocket[p] = 1
    
     pocket=new_pocket
+
+def cycle_cubes_2():
+    global pocket
+    off = [(x, y, z, w) for x in range(-1, 2) for y in range(-1, 2) for z in range(-1, 2) for w in range(-1, 2) if not x == y == z ==w == 0 ]
+    neigb = set((x + dx, y + dy,z + dz,w + dw) for x, y, z, w in pocket.keys() for dx, dy, dz, dw in off)
+    
+    new_pocket = defaultdict(int)
+    cp = pocket.copy()
+    for n in neigb:
+        if n not in pocket:
+            pocket[n] = 0
+
+    for p in pocket:
+        ne=0
+        for n in off:      
+            ne+= cp[p[0]+n[0],p[1]+n[1],p[2]+n[2],p[3]+n[3]]
+
+        if pocket[p]:
+            if ne in [2,3]: 
+                new_pocket[p] = 1
+            else:
+               new_pocket[p] = 0 
+
+        if not pocket[p] and ne == 3: 
+            new_pocket[p] = 1
+   
+    pocket=new_pocket
   
 def first_star():  
     # active    = if 2 or 3 neighbors active dan inactive
@@ -50,10 +77,10 @@ def first_star():
     global pocket
     for y,d in enumerate(data):
         for x,p in enumerate(d):
-            pocket[(x,y,0)] = int(p) 
+            pocket[(x,y,0,0)] = int(p) 
     
     for _ in range(6):
-        cycle_cubes()
+        cycle_cubes_2()
     
     print("Result First Star")   
     print(sum(pocket.values()))
