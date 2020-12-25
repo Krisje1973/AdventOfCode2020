@@ -10,7 +10,7 @@ pocket=defaultdict(int)
 file = FileHelper()
 def readinput():
     global data
-    data = file.readinput_lines_and_replace(r"Day17\input_ex.txt",[[".","0"],["#","1"]])
+    data = file.readinput_lines_and_replace(r"Day17\input.txt",[[".","0"],["#","1"]])
    
 def main():
     readinput()
@@ -22,7 +22,7 @@ def cycle_cubes():
     off = [(x, y, z) for x in range(-1, 2) for y in range(-1, 2) for z in range(-1, 2) if not x == y == z == 0]
     neigb = set((x + dx, y + dy,z + dz) for x, y, z in pocket.keys() for dx, dy, dz in off)
     
-    new_pocket = pocket.copy()
+    new_pocket = defaultdict(int)
     cp = pocket.copy()
     for n in neigb:
         if n not in pocket:
@@ -33,14 +33,17 @@ def cycle_cubes():
         for n in off:      
             ne+= cp[p[0]+n[0],p[1]+n[1],p[2]+n[2]]
 
-        if pocket[p] and ne in [2,3]: 
-            new_pocket[p] = 0
+        if pocket[p]:
+            if ne in [2,3]: 
+                new_pocket[p] = 1
+            else:
+               new_pocket[p] = 0 
+
         if not pocket[p] and ne == 3: 
             new_pocket[p] = 1
-    
-
-    pocket=new_pocket
-
+   
+    for p in new_pocket:
+        pocket[p]=new_pocket[p]
 
 
 def first_star():  
@@ -51,7 +54,7 @@ def first_star():
         for x,p in enumerate(d):
             pocket[(x,y,0)] = int(p) 
     
-    for _ in range(1,7):
+    for _ in range(6):
         cycle_cubes()
     
     print("Result First Star")   
