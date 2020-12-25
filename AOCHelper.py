@@ -423,8 +423,7 @@ class FileHelper:
     return arrays
 class Compass:
   compasspoints = {'N': (0, 1), 'E': (1, 0), 'S': (0, -1), 'W': (-1, 0)} # Can be used for north/south, east/west calculation
-  hexaspoints = {'E': (1, 0), 'SE': (0.5, -0.5), 'SW': (-0.5, -0.5), 'W': (-1, 0),'NW': (-0.5, 0.5), 'NE': (0.5, 0.5)} # Can be used east, southeast, southwest, west, northwest, and northeast
-
+  hexaspoints= {"E": (1, 0), "W": (-1, 0), "SE": (0, 1), "SW": (-1, 1), "NE": (1, -1), "NW": (0, -1)}
   def turnCompassPoint(self,currentdirection,turndirection,degrees):     
     degrees = (degrees // 90)   
     if turndirection == "L":

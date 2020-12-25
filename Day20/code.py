@@ -6,6 +6,7 @@ from AOCHelper import *
 import re
 import math
 from itertools import * 
+import time
 
 data=[]
 tiles={}
@@ -54,10 +55,11 @@ class Tile():
     
 def main():
     readinput()
-    #first_star()
+    #first_star()  
     second_star()        
 
-def first_star():  
+def first_star():
+    _start = time.time()  
     tot = 1
     for t in tiles:        
         tile = tiles[t]
@@ -67,6 +69,10 @@ def first_star():
 
     print("Result First Star")  
     print(tot) 
+    end = time.time()
+    ellapsed = end - _start
+    print(ellapsed)
+ 
 
 def find_neigborgs(tile):
     corners = [tile.t,tile.b,tile.l,tile.r]
@@ -154,19 +160,28 @@ def second_star():
         board.append(first)
         cnt+=1
     
-    start = tiles[str(board[1].no)]
-    links=find_candidates(start,others)
-    board.append(start)
-    while len(others) > 0:       
-        first = links[next(iter(links))]
-        links=find_candidates(first,others)
-        others.pop(str(first.no))
-      
-        board.append(first)
+    done = False
+    others_back = others.copy()
+    cnt=0
+    while not done and cnt<len(others):
         cnt+=1
+        others = others_back.copy()
+        start = tiles[str(board[cnt].no)]
+        links=find_candidates(start,others)
+        board.append(start)
 
+        while len(others) > 0:               
+            if len(links) == 0:
+                break
+            first = links[next(iter(links))]
+            links=find_candidates(first,others)
+            others.pop(str(first.no))
+        
+            board.append(first)
+            cnt+=1
+        done = len(others)==0
 
-    print(len(board))
+    print(board)
     print(dim)
     monster = """\
                     #
